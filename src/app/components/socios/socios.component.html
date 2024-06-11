@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="background-image"></div>
+  <div class="socios-list">
+      <h1>Lista de Socios</h1>
+      <table>
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+                  <th>Barcos</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let socio of socios">
+                  <td>{{ socio.nombre }}</td>
+                  <td>{{ socio.apellidos }}</td>
+                  <td>
+                      <ul>
+                          <li *ngFor="let barco of socio.barcos">
+                              {{ barco.nombre }}
+                          </li>
+                      </ul>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
