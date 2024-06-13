@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Socio, Barco } from '../models/socio.model';
+import { Socio, Barco } from '../../models/socio/socio.model';
 
 @Injectable({
   providedIn: 'root'

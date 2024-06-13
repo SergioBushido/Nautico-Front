@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="background-image"></div>
+    <div class="socios-list">
+        <h1>Lista de Barcos</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Matricula</th>
+                    <th>Numero de Amarre</th>
+                    <th>Cuota de Amarre</th>
+                    <th>Dueño</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let barcos of barco">
+                    <td>{{ barcos.nombre }}</td>
+                    <td>{{ barcos.matricula }}</td>
+                    <td>{{ barcos.numeroAmarre }}</td>
+                    <td>{{ barcos.matricula }}</td>
+                    <td>
+                    
+                    <tr *ngFor="let socio of socios">
+                        <td>{{ socio.id }}</td>
+                    </tr>
+
+            </tbody>
+        </table>
+    </div>
+  </div>
+  

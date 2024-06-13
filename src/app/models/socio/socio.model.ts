@@ -1,4 +1,4 @@
-import { Barco } from "./barco.model";
+import { Barco } from "../barco/barco.model";
 
 export interface Socio {
     id: number;

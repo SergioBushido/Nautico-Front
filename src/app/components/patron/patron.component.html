@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="background-image"></div>
+  <div class="patrones-list">
+
+    <h1 class="my-4">Gestión de Patrones</h1>
+  
+    <div class="card mb-4">
+      <div class="card-header">Añadir Patrón</div>
+      <div class="card-body">
+        <form (ngSubmit)="addPatron()">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" [(ngModel)]="newPatron.nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="licencia">Licencia</label>
+            <input type="text" class="form-control" id="licencia" [(ngModel)]="newPatron.licencia" name="licencia" required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Añadir</button>
+        </form>
+      </div>
+    </div>
+  
+    <div *ngIf="editPatron" class="card mb-4">
+      <div class="card-header">Editar Patrón</div>
+      <div class="card-body">
+        <form (ngSubmit)="updatePatron()">
+          <div class="form-group">
+            <label for="editNombre">Nombre</label>
+            <input type="text" class="form-control" id="editNombre" [(ngModel)]="editPatron.nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="editLicencia">Licencia</label>
+            <input type="text" class="form-control" id="editLicencia" [(ngModel)]="editPatron.licencia" name="licencia" required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+          <button type="button" class="btn btn-secondary mt-3" (click)="clearEdit()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Licencia</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patron of patrones">
+          <td>{{ patron.id }}</td>
+          <td>{{ patron.nombre }}</td>
+          <td>{{ patron.licencia }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="selectPatron(patron)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deletePatron(patron.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  

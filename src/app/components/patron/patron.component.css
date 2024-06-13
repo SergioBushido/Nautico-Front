@@ -1,0 +1,69 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.background-image {
+  background-image: url('/assets/barco.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: 2; 
+}
+
+
+.patrones-list {
+  flex: 1; /* Adjust the proportion of the list area */
+  background-color: #f2f2f2; /* Light gray background */
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff; /* White background for table */
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f9f9f9; /* Light gray background for headers */
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternating row color */
+}
+
+tr:hover {
+  background-color: #e9e9e9; /* Hover effect for rows */
+}

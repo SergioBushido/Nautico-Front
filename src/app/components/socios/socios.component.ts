@@ -1,7 +1,7 @@
 // src/app/components/socios/socios.component.ts
 import { Component, OnInit } from '@angular/core';
-import { SocioService } from '../../services/socio.service';
-import { Socio } from '../../models/socio.model';
+import { SocioService } from '../../services/socio/socio.service';
+import { Socio } from '../../models/socio/socio.model';
 
 @Component({
   selector: 'app-socios',
