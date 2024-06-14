@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/authService/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -20,8 +21,19 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      // Handle the login logic here
-      console.log(this.loginForm.value);
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe(
+        response => {
+          console.log(response);
+          // Maneja la respuesta exitosa
+          // Por ejemplo, guarda el token y redirige al usuario
+          this.router.navigate(['/barcos']);
+        },
+        error => {
+          console.error('Error al autenticar', error);
+          // Maneja el error
+        }
+      );
     }
   }
 
