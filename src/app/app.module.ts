@@ -7,8 +7,10 @@ import { SociosComponent } from './components/socios/socios.component';
 import { PageNotFoundComponent } from './components/page-not-found-component/page-not-found-component.component';
 import { HomeComponent } from './components/home/home.component';
 import { BarcoComponent } from './components/barco/barco.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatronComponent } from './components/patron/patron.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,16 @@ import { PatronComponent } from './components/patron/patron.component';
     PageNotFoundComponent,
     HomeComponent,
     BarcoComponent,
-    PatronComponent
+    PatronComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
