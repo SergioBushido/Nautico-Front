@@ -26,7 +26,7 @@ export class LoginComponent {
         response => {
           console.log(response);
           // Maneja la respuesta exitosa
-          // Por ejemplo, guarda el token y redirige al usuario
+          // Aqui tengo que meter el token
           this.router.navigate(['/barcos']);
         },
         error => {
