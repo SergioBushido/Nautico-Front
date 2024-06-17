@@ -7,6 +7,8 @@ import { BarcoComponent } from './components/barco/barco.component';
 import { PatronComponent } from './components/patron/patron.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './auth.guard';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 

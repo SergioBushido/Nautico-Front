@@ -1,4 +1,3 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,13 +24,11 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe(
         response => {
           console.log(response);
-          // Maneja la respuesta exitosa
-          // Aqui tengo que meter el token
           this.router.navigate(['/barcos']);
         },
         error => {
           console.error('Error al autenticar', error);
-          // Maneja el error
+          // Maneja el error, por ejemplo, mostrar un mensaje al usuario
         }
       );
     }
