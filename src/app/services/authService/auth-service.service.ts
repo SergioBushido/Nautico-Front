@@ -1,39 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8081/api/v1/auth'; // URL de tu backend
+  private authUrl = 'http://localhost:8081/api/v1/auth';
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/authenticate`, { email, password }).pipe(
+    return this.http.post(`${this.authUrl}/authenticate`, { email, password }).pipe(
       tap((response: any) => {
-        console.log('Login response:', response); // Log de la respuesta completa
-        const accessToken = response.access_token;
-        const refreshToken = response.refresh_token;
-
-        console.log('Access Token:', accessToken); // Log del token de acceso
-        console.log('Refresh Token:', refreshToken); // Log del token de refresco
-
-        if (this.isValidJwt(accessToken)) {
-          localStorage.setItem('accessToken', accessToken);
-        } else {
-          throw new Error('Invalid access token received');
-        }
-
-        if (this.isValidJwt(refreshToken)) {
-          localStorage.setItem('refreshToken', refreshToken);
-        } else {
-          throw new Error('Invalid refresh token received');
-        }
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
       })
     );
+  }
+
+  refreshToken(): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/refresh-token`, {});
   }
 
   isLoggedIn(): boolean {
@@ -45,11 +33,12 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
   }
 
-  private isValidJwt(token: string): boolean {
-    if (!token) {
-      return false;
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 403) {
+      alert('Token expirado. Por favor, inicia sesión de nuevo.');
+    } else {
+      alert('Error de autenticación: ' + error.message);
     }
-    const parts = token.split('.');
-    return parts.length === 3;
+    return throwError(error);
   }
 }
