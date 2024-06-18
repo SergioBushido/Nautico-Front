@@ -24,11 +24,11 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/barcos']);
+          this.router.navigate(['/barcos']);  // Redirigir a la página /barcos después de un login exitoso
         },
         error => {
           console.error('Error al autenticar', error);
-          // Maneja el error, por ejemplo, mostrar un mensaje al usuario
+          alert('Error al autenticar: ' + error.message); // Muestra un mensaje al usuario
         }
       );
     }

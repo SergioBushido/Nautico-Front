@@ -2,27 +2,35 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8081/api/v1/auth';
+  private baseUrl = 'http://localhost:8081/api/v1/auth'; // URL de tu backend
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/authenticate`, { email, password }).pipe(
       tap((response: any) => {
-        if (this.isValidJwt(response.accessToken)) {
-          localStorage.setItem('accessToken', response.accessToken);
+        console.log('Login response:', response); // Log de la respuesta completa
+        const accessToken = response.access_token;
+        const refreshToken = response.refresh_token;
+
+        console.log('Access Token:', accessToken); // Log del token de acceso
+        console.log('Refresh Token:', refreshToken); // Log del token de refresco
+
+        if (this.isValidJwt(accessToken)) {
+          localStorage.setItem('accessToken', accessToken);
         } else {
-          console.error('Invalid access token received');
+          throw new Error('Invalid access token received');
         }
 
-        if (this.isValidJwt(response.refreshToken)) {
-          localStorage.setItem('refreshToken', response.refreshToken);
+        if (this.isValidJwt(refreshToken)) {
+          localStorage.setItem('refreshToken', refreshToken);
         } else {
-          console.error('Invalid refresh token received');
+          throw new Error('Invalid refresh token received');
         }
       })
     );
@@ -38,6 +46,9 @@ export class AuthService {
   }
 
   private isValidJwt(token: string): boolean {
+    if (!token) {
+      return false;
+    }
     const parts = token.split('.');
     return parts.length === 3;
   }

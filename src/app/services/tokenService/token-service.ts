@@ -77,6 +77,9 @@ export class TokenService {
   }
 
   private isValidJwt(token: string): boolean {
+    if (!token) {
+      return false;
+    }
     const parts = token.split('.');
     return parts.length === 3;
   }
