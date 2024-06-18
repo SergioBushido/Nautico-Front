@@ -8,7 +8,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('accessToken');
 
-    if (token) {
+    if (token && this.isValidJwt(token)) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -17,5 +17,10 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request);
+  }
+
+  private isValidJwt(token: string): boolean {
+    const parts = token.split('.');
+    return parts.length === 3;
   }
 }

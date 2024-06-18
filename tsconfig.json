@@ -1,5 +1,4 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "strict": true,
@@ -15,11 +14,15 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "commonjs",
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/typings"
     ]
   },
   "angularCompilerOptions": {
