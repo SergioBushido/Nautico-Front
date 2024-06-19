@@ -1,31 +1,102 @@
+<!-- src/app/components/barco/barco.component.html -->
 <div class="container">
     <div class="background-image"></div>
-    <div class="socios-list">
-        <h1>Lista de Barcos</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Matricula</th>
-                    <th>Numero de Amarre</th>
-                    <th>Cuota de Amarre</th>
-                    <th>Dueño</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let barcos of barco">
-                    <td>{{ barcos.nombre }}</td>
-                    <td>{{ barcos.matricula }}</td>
-                    <td>{{ barcos.numeroAmarre }}</td>
-                    <td>{{ barcos.matricula }}</td>
-                    <td>
-                    
-                    <tr *ngFor="let socio of socios">
-                        <td>{{ socio.id }}</td>
-                    </tr>
-
-            </tbody>
-        </table>
+    <div class="barcos-list">
+  
+      <h1 class="my-4">Gestión de Barcos</h1>
+  
+      <div class="card mb-4">
+        <div class="card-header">Añadir Barco</div>
+        <div class="card-body">
+          <form (ngSubmit)="addBarco()">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" [(ngModel)]="newBarco.nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="matricula">Matricula</label>
+              <input type="text" class="form-control" id="matricula" [(ngModel)]="newBarco.matricula" name="matricula" required>
+            </div>
+            <div class="form-group">
+              <label for="numeroAmarre">Número de Amarre</label>
+              <input type="number" class="form-control" id="numeroAmarre" [(ngModel)]="newBarco.numeroAmarre" name="numeroAmarre" required>
+            </div>
+            <div class="form-group">
+              <label for="cuotaAmarre">Cuota de Amarre</label>
+              <input type="number" class="form-control" id="cuotaAmarre" [(ngModel)]="newBarco.cuotaAmarre" name="cuotaAmarre" required>
+            </div>
+            <div class="form-group">
+              <label for="socio">Socio</label>
+              <select class="form-control" id="socio" [(ngModel)]="newBarco.socio" name="socio">
+                <option [ngValue]="null">Sin Socio</option>
+                <option *ngFor="let socio of socios" [ngValue]="socio">{{ socio.nombre }} {{ socio.apellidos }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Añadir</button>
+          </form>
+        </div>
+      </div>
+  
+      <div *ngIf="editBarco" class="card mb-4">
+        <div class="card-header">Editar Barco</div>
+        <div class="card-body">
+          <form (ngSubmit)="updateBarco()">
+            <div class="form-group">
+              <label for="editNombre">Nombre</label>
+              <input type="text" class="form-control" id="editNombre" [(ngModel)]="editBarco.nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="editMatricula">Matricula</label>
+              <input type="text" class="form-control" id="editMatricula" [(ngModel)]="editBarco.matricula" name="matricula" required>
+            </div>
+            <div class="form-group">
+              <label for="editNumeroAmarre">Número de Amarre</label>
+              <input type="number" class="form-control" id="editNumeroAmarre" [(ngModel)]="editBarco.numeroAmarre" name="numeroAmarre" required>
+            </div>
+            <div class="form-group">
+              <label for="editCuotaAmarre">Cuota de Amarre</label>
+              <input type="number" class="form-control" id="editCuotaAmarre" [(ngModel)]="editBarco.cuotaAmarre" name="cuotaAmarre" required>
+            </div>
+            <div class="form-group">
+              <label for="editSocio">Socio</label>
+              <select class="form-control" id="editSocio" [(ngModel)]="editBarco.socio" name="socio">
+                <option [ngValue]="null">Sin Socio</option>
+                <option *ngFor="let socio of socios" [ngValue]="socio">{{ socio.nombre }} {{ socio.apellidos }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            <button type="button" class="btn btn-secondary mt-3" (click)="clearEdit()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+  
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Matricula</th>
+            <th>Número de Amarre</th>
+            <th>Cuota de Amarre</th>
+            <th>Socio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let barco of barcos">
+            <td>{{ barco.id }}</td>
+            <td>{{ barco.nombre }}</td>
+            <td>{{ barco.matricula }}</td>
+            <td>{{ barco.numeroAmarre }}</td>
+            <td>{{ barco.cuotaAmarre }}</td>
+            <td>{{ barco.socio?.nombre || 'Sin Socio' }} {{ barco.socio?.apellidos }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="selectBarco(barco)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteBarco(barco.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   

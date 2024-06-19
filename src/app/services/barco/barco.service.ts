@@ -13,7 +13,7 @@ export class BarcoService {
   constructor(private http: HttpClient) { }
 
   getBarcos(): Observable<Barco[]> {
-    return this.http.get<Barco[]>(`${this.apiUrl}`);
+    return this.http.get<Barco[]>(this.apiUrl);
   }
 
   getBarcoById(id: number): Observable<Barco> {
@@ -30,17 +30,5 @@ export class BarcoService {
 
   deleteBarco(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  getBarcosPorNombre(nombre: string): Observable<Barco[]> {
-    return this.http.get<Barco[]>(`${this.apiUrl}/buscar?nombre=${nombre}`);
-  }
-
-  getTotalCuotaAmarre(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/cuotaTotalAmarre`);
-  }
-
-  updateCuotaAmarre(numeroAmarre: number, nuevaCuota: number): Observable<Barco> {
-    return this.http.put<Barco>(`${this.apiUrl}/actualizarCuotaAmarre?numeroAmarre=${numeroAmarre}&nuevaCuota=${nuevaCuota}`, {});
   }
 }

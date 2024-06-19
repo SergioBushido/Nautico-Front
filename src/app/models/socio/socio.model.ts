@@ -1,10 +1,13 @@
-import { Barco } from "../barco/barco.model";
+// src/app/models/socio/socio.model.ts
+import { Barco } from '../barco/barco.model';
 
-export interface Socio {
-    id: number;
-    nombre: string;
-    apellidos: string;
-    barcos: Barco[];
-  }
+export class Socio {
+  constructor(
+    public id: number,
+    public nombre: string,
+    public apellidos: string,
+    public barcos: Barco[] // Asociación con Barco
+  ) {}
+}
 
-export { Barco };
+export { Barco }; // Exportar Barco si es necesario en otros lugares

@@ -8,6 +8,6 @@ export class Barco {
     public nombre: string,
     public numeroAmarre: number,
     public cuotaAmarre: number,
-    public socio: Socio
+    public socio?: Socio | null // Permitir que el socio sea opcional o nulo
   ) {}
 }
