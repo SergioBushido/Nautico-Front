@@ -1,28 +1,82 @@
 <div class="container">
-  <div class="background-image"></div>
-  <div class="socios-list">
+    <div class="background-image"></div>
+    <div class="socios-list">
       <h1>Lista de Socios</h1>
-      <table>
-          <thead>
-              <tr>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
-                  <th>Barcos</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let socio of socios">
-                  <td>{{ socio.nombre }}</td>
-                  <td>{{ socio.apellidos }}</td>
-                  <td>
-                      <ul>
-                          <li *ngFor="let barco of socio.barcos">
-                              {{ barco.nombre }}
-                          </li>
-                      </ul>
-                  </td>
-              </tr>
-          </tbody>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Barcos</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let socio of socios">
+            <td>{{ socio.nombre }}</td>
+            <td>{{ socio.apellidos }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let barco of socio.barcos">
+                  {{ barco.nombre }}
+                </li>
+              </ul>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="editSocio(socio)" data-bs-toggle="modal" data-bs-target="#editSocioModal">Editar</button>
+              <button class="btn btn-danger btn-sm " (click)="deleteSocio(socio.id)">Eliminar</button>
+
+            </td>
+          </tr>
+        </tbody>
       </table>
+    
+  
+   
+      <h2>Crear Socio</h2>
+      <form (ngSubmit)="createSocio()">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" [(ngModel)]="newSocio.nombre" name="nombre" class="form-control" required>
+        <label for="apellidos">Apellidos:</label>
+        <input id="apellidos" [(ngModel)]="newSocio.apellidos" name="apellidos" class="form-control" required>
+        <button type="submit" class="btn btn-success mt-2">Crear</button>
+      </form>
+    </div>
+  
+    <div class="form-container" *ngIf="selectedSocioId">
+      <h2>Añadir Barco al Socio Seleccionado</h2>
+      <form (ngSubmit)="addBarcoToSocio()">
+        <label for="barco-matricula">Matrícula del Barco:</label>
+        <input id="barco-matricula" [(ngModel)]="newBarco.matricula" name="barco-matricula" class="form-control" required>
+        <label for="barco-nombre">Nombre del Barco:</label>
+        <input id="barco-nombre" [(ngModel)]="newBarco.nombre" name="barco-nombre" class="form-control" required>
+        <label for="barco-numeroAmarre">Número de Amarre:</label>
+        <input id="barco-numeroAmarre" [(ngModel)]="newBarco.numeroAmarre" name="barco-numeroAmarre" class="form-control" required>
+        <label for="barco-cuotaAmarre">Cuota de Amarre:</label>
+        <input id="barco-cuotaAmarre" [(ngModel)]="newBarco.cuotaAmarre" name="barco-cuotaAmarre" class="form-control" required>
+        <button type="submit" class="btn btn-success mt-2">Añadir</button>
+      </form>
+    </div>
+  
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editSocioModal" tabindex="-1" aria-labelledby="editSocioModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editSocioModalLabel">Editar Socio</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="updateSocio(selectedSocio)">
+              <label for="edit-nombre">Nombre:</label>
+              <input id="edit-nombre" [(ngModel)]="selectedSocio.nombre" name="edit-nombre" class="form-control" required>
+              <label for="edit-apellidos">Apellidos:</label>
+              <input id="edit-apellidos" [(ngModel)]="selectedSocio.apellidos" name="edit-apellidos" class="form-control" required>
+              <button type="submit" class="btn btn-primary mt-2" data-bs-dismiss="modal">Guardar Cambios</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  
