@@ -1,8 +1,8 @@
 // register.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/userService/user-service.service'; // Ajusta la ruta según tu estructura de proyecto
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/authService/auth-service.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -22,8 +22,8 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const newUser = this.registerForm.value;
-      this.userService.createUser(newUser).subscribe(
+      const { username, email, password }  = this.registerForm.value;
+      this.authService.register(username, email, password).subscribe(
         response => {
           console.log('Usuario creado exitosamente:', response);
           this.router.navigate(['/login']); // Redirige al login después de crear el usuario
