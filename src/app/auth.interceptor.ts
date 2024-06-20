@@ -12,8 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('accessToken');
-
+    const token = localStorage.getItem('access_token');
     if (token && this.isValidJwt(token)) {
       request = this.addTokenHeader(request, token);
     }
@@ -25,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return this.authService.refreshToken().pipe(
             switchMap((response: any) => {
               this.isRefreshing = false;
-              localStorage.setItem('accessToken', response.accessToken);
+              localStorage.setItem('access_token', response.accessToken);
               return next.handle(this.addTokenHeader(request, response.accessToken));
             }),
             catchError((refreshError) => {

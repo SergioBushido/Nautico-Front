@@ -14,8 +14,8 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.authUrl}/authenticate`, { email, password }).pipe(
       tap((response: any) => {
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('refresh_token', response.refresh_token);
       })
     );
   }
@@ -25,12 +25,12 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('accessToken');
+    return !!localStorage.getItem('access_token');
   }
 
   logout() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -24,7 +24,7 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/barcos']);  // Redirigir a la página /barcos después de un login exitoso
+          this.router.navigate(['/socios']);  // Redirigir a la página /barcos después de un login exitoso
         },
         error => {
           console.error('Error al autenticar', error);

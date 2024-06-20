@@ -8,7 +8,7 @@ import { Socio, Barco } from '../../models/socio/socio.model';
   providedIn: 'root'
 })
 export class SocioService {
-  private apiUrl = 'http://localhost:8081/socio';
+  private apiUrl = 'http://localhost:8081/api/v1/socios';
 
   constructor(private http: HttpClient) { }
 
