@@ -12,6 +12,8 @@ import { PatronComponent } from './components/patron/patron.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { PasswordRecoveryService } from './services/password-recovery.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { AuthInterceptor } from './auth.interceptor';
     BarcoComponent,
     PatronComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PasswordRecoveryComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,7 @@ import { AuthInterceptor } from './auth.interceptor';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  providers: [    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, PasswordRecoveryService
   ],
   bootstrap: [AppComponent]
 })

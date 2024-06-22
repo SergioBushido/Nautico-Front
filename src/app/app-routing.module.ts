@@ -8,6 +8,7 @@ import { PatronComponent } from './components/patron/patron.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './auth.guard';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'barcos', component: BarcoComponent },
   { path: 'patrones', component: PatronComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: '**', component: PageNotFoundComponent }
