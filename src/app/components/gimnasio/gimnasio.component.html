@@ -1,0 +1,23 @@
+<div class="container" *ngIf="!reservationConfirmed">
+  <h1>Reserva de clases</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Selecciona una fecha</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Elige una fecha" (dateChange)="onDateChange($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div *ngIf="selectedDate">
+    <h2>Horas disponibles</h2>
+    <mat-radio-group [(ngModel)]="selectedHour">
+      <div *ngFor="let hour of availableHours">
+        <mat-radio-button [value]="hour">{{ hour }}</mat-radio-button>
+      </div>
+    </mat-radio-group>
+    <button mat-raised-button color="primary" (click)="confirmReservation()" [disabled]="!selectedHour">Confirmar Reserva</button>
+  </div>
+</div>
+
+<div class="confirmation-message" *ngIf="reservationConfirmed">
+  <h1>{{ reservationMessage }}</h1>
+</div>

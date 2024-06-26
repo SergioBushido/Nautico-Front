@@ -14,6 +14,17 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { PasswordRecoveryService } from './services/password-recovery.service';
+import { ContactComponent } from './components/contact/contact.component';
+import { ClubComponent } from './components/club/club.component';
+import { GimnasioComponent } from './components/gimnasio/gimnasio.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -25,16 +36,28 @@ import { PasswordRecoveryService } from './services/password-recovery.service';
     PatronComponent,
     LoginComponent,
     RegisterComponent,
-    PasswordRecoveryComponent
+    PasswordRecoveryComponent,
+    ContactComponent,
+    ClubComponent,
+    GimnasioComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatRadioModule
   ],
-  providers: [    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, PasswordRecoveryService
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    PasswordRecoveryService,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

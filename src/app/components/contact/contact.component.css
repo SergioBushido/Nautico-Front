@@ -1,0 +1,48 @@
+.contacto {
+  align-items: center;
+  background-image: url('/assets/contacto.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.contacto h2, .contacto h3, .contacto p {
+  color: #ffffff; /* Blanco para el texto */
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.contacto h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.contacto h3 {
+  font-size: 1.5rem;
+}
+
+.contacto p {
+  font-size: 1rem;
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para los campos de entrada */
+  color: #000000; /* Color del texto dentro de los campos de entrada */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.contacto label {
+  color: #ffffff;
+}

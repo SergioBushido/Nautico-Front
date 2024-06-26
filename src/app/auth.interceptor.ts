@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('access_token');
-    if (token && this.isValidJwt(token)) {
+    if (token && this.isValidJwt(token)) {//si jay token y es valido lo mete en el encabezado
       request = this.addTokenHeader(request, token);
     }
 
