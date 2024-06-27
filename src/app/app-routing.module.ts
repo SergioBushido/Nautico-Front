@@ -12,6 +12,10 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { ContactComponent } from './components/contact/contact.component';
 import { ClubComponent } from './components/club/club.component';
 import { GimnasioComponent } from './components/gimnasio/gimnasio.component';
+import { NatacionComponent } from './components/natacion/natacion.component';
+import { TenisComponent } from './components/tenis/tenis.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { TransparenciaComponent } from './components/transparencia/transparencia.component';
 
 
 const routes: Routes = [
@@ -25,6 +29,12 @@ const routes: Routes = [
   { path: 'contacto', component: ContactComponent },
   { path: 'club', component: ClubComponent },
   { path: 'gimnasio', component: GimnasioComponent },
+  { path: 'natacion', component: NatacionComponent },
+  { path: 'tenis', component: TenisComponent },
+  { path: 'noticias', component: NoticiasComponent },
+  { path: 'transparencia', component: TransparenciaComponent },
+  { path: 'cita', component: ClubComponent },
+
 
   { path: '**', component: PageNotFoundComponent }
 ];

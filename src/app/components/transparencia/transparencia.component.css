@@ -1,0 +1,43 @@
+.transparency-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .previous-exercises {
+    text-align: right;
+  }
+  
+  .previous-exercises img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .previous-exercises p {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .main-content {
+    text-align: center;
+  }
+  
+  .main-content p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .main-content img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  

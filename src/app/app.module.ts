@@ -24,6 +24,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatRadioModule } from '@angular/material/radio';
+import { NatacionComponent } from './components/natacion/natacion.component';
+import { TenisComponent } from './components/tenis/tenis.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TransparenciaComponent } from './components/transparencia/transparencia.component';
 
 
 @NgModule({
@@ -39,7 +47,12 @@ import { MatRadioModule } from '@angular/material/radio';
     PasswordRecoveryComponent,
     ContactComponent,
     ClubComponent,
-    GimnasioComponent
+    GimnasioComponent,
+    NatacionComponent,
+    TenisComponent,
+    NoticiasComponent,
+    TransparenciaComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -52,7 +65,11 @@ import { MatRadioModule } from '@angular/material/radio';
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatRadioModule
+    MatRadioModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

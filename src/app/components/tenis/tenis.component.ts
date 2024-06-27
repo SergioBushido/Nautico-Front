@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-gimnasio',
-  templateUrl: './gimnasio.component.html',
-  styleUrls: ['./gimnasio.component.css']
+  selector: 'app-tenis',
+  templateUrl: './tenis.component.html',
+  styleUrl: './tenis.component.css'
 })
-export class GimnasioComponent {
+export class TenisComponent {
+
+
   selectedDate: Date | null = null;
   availableHours: string[] = [];
   selectedHour: string | null = null;
