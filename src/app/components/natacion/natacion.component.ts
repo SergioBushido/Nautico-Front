@@ -1,48 +1,76 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ReservationService } from '../../services/reservation/Reservation.Service';
 
 @Component({
   selector: 'app-natacion',
   templateUrl: './natacion.component.html',
-  styleUrl: './natacion.component.css'
+  styleUrls: ['./natacion.component.css']
 })
-export class NatacionComponent {
+export class NatacionComponent implements OnInit {
   selectedDate: Date | null = null;
-  availableHours: string[] = [];
+  availableTimeSlots: any[] = [];
   selectedHour: string | null = null;
   reservationConfirmed: boolean = false;
   reservationMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private reservationService: ReservationService) {}
 
+  ngOnInit() {
+    // No cargar franjas horarias inicialmente
+  }
 
   onDateChange(event: any) {
     this.selectedDate = event.value;
-    this.loadAvailableHours();
+    this.adjustDateToCorrectTimezone();
+    this.loadAvailableTimeSlots();
   }
 
-  loadAvailableHours() {
-    const morningHours = this.generateHours('08:00', 8);  // Genera 8 horas desde las 08:00
-    const afternoonHours = this.generateHours('14:00', 8);  // Genera 8 horas desde las 14:00
-    this.availableHours = [...morningHours, ...afternoonHours];
-  }
-
-  generateHours(start: string, count: number): string[] {
-    const [startHour, startMinute] = start.split(':').map(Number);
-    let hours: string[] = [];
-    for (let i = 0; i < count; i++) {
-      const hour = startHour + i;
-      const formattedHour = hour < 10 ? `0${hour}` : hour;
-      hours.push(`${formattedHour}:${startMinute < 10 ? '0' + startMinute : startMinute}`);
+  adjustDateToCorrectTimezone() {
+    if (this.selectedDate) {
+      const userTimezoneOffset = this.selectedDate.getTimezoneOffset() * 60000;
+      this.selectedDate = new Date(this.selectedDate.getTime() - userTimezoneOffset);
     }
-    return hours;
+  }
+
+  loadAvailableTimeSlots() {
+    if (this.selectedDate) {
+      console.log('Selected Date:', this.selectedDate);  // Verificar la fecha seleccionada
+
+      // Ajustar el formateo de la fecha para asegurarse de que sea correcta
+      const formattedDate = this.selectedDate.toISOString().split('T')[0];
+      console.log('Formatted Date:', formattedDate);  // Verificar la fecha formateada
+
+      this.reservationService.getAvailableTimeSlots(formattedDate).subscribe(
+        (data: any) => {
+          console.log('Data received from backend:', data);  // Verificar los datos recibidos
+          this.availableTimeSlots = data;
+          console.log('Filtered Time Slots:', this.availableTimeSlots);  // Verificar los datos filtrados
+        },
+        (error: any) => {
+          console.error('Error loading time slots:', error);
+        }
+      );
+    }
   }
 
   confirmReservation() {
     if (this.selectedDate && this.selectedHour) {
-      const formattedDate = this.selectedDate.toLocaleDateString();
-      this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
-      this.reservationConfirmed = true;
+      const reservation = {
+        date: this.selectedDate.toISOString().split('T')[0],  // Asegúrate de enviar la fecha en el formato correcto
+        hour: this.selectedHour
+      };
+      this.reservationService.createReservation(reservation).subscribe(
+        response => {
+          const formattedDate = this.selectedDate!.toLocaleDateString();
+          this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
+          this.reservationConfirmed = true;
+          this.loadAvailableTimeSlots(); // Recarga las horas disponibles después de confirmar la reserva
+        },
+        error => {
+          console.error('Error creating reservation:', error);
+        }
+      );
     }
   }
 
