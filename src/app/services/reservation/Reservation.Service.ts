@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiUrl = 'http://localhost:8081/api/reservations';
+  private baseUrl = 'http://localhost:8081/api/reservations';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getAvailableTimeSlots(date: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/timeslots/${date}`);
+  getAvailableTimeSlots(date: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/timeslots/${date}`);
   }
 
-  createReservation(reservation: any): Observable<any> {
-    return this.http.post(this.apiUrl, reservation);
+  createReservation(timeSlotId: number, reservation: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${timeSlotId}`, reservation);
   }
 }

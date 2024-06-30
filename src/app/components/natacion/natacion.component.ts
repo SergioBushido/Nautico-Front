@@ -56,21 +56,28 @@ export class NatacionComponent implements OnInit {
 
   confirmReservation() {
     if (this.selectedDate && this.selectedHour) {
-      const reservation = {
-        date: this.selectedDate.toISOString().split('T')[0],  // Asegúrate de enviar la fecha en el formato correcto
-        hour: this.selectedHour
-      };
-      this.reservationService.createReservation(reservation).subscribe(
-        response => {
-          const formattedDate = this.selectedDate!.toLocaleDateString();
-          this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
-          this.reservationConfirmed = true;
-          this.loadAvailableTimeSlots(); // Recarga las horas disponibles después de confirmar la reserva
-        },
-        error => {
-          console.error('Error creating reservation:', error);
-        }
-      );
+      // Encontrar el timeSlotId correspondiente a la hora seleccionada
+      const selectedTimeSlot = this.availableTimeSlots.find(slot => slot.hour === this.selectedHour);
+
+      if (selectedTimeSlot) {
+        const timeSlotId = selectedTimeSlot.id;
+        const reservation = {
+          date: this.selectedDate.toISOString().split('T')[0],  // Asegúrate de enviar la fecha en el formato correcto
+          hour: this.selectedHour
+        };
+
+        this.reservationService.createReservation(timeSlotId, reservation).subscribe(
+          response => {
+            const formattedDate = this.selectedDate!.toLocaleDateString();
+            this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
+            this.reservationConfirmed = true;
+            this.loadAvailableTimeSlots(); // Recarga las horas disponibles después de confirmar la reserva
+          },
+          error => {
+            console.error('Error creating reservation:', error);
+          }
+        );
+      }
     }
   }
 
@@ -78,3 +85,4 @@ export class NatacionComponent implements OnInit {
     this.router.navigate([route]);
   }
 }
+
