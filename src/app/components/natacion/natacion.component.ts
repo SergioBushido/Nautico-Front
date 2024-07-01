@@ -9,7 +9,7 @@ import { ReservationService } from '../../services/reservation/Reservation.Servi
 })
 export class NatacionComponent implements OnInit {
   selectedDate: Date | null = null;
-  availableTimeSlots: any[] = [];
+  availableTimeNatacion: any[] = [];
   selectedHour: string | null = null;
   reservationConfirmed: boolean = false;
   reservationMessage: string = '';
@@ -23,7 +23,7 @@ export class NatacionComponent implements OnInit {
   onDateChange(event: any) {
     this.selectedDate = event.value;
     this.adjustDateToCorrectTimezone();
-    this.loadAvailableTimeSlots();
+    this.loadAvailableNatacion();
   }
 
   adjustDateToCorrectTimezone() {
@@ -33,19 +33,19 @@ export class NatacionComponent implements OnInit {
     }
   }
 
-  loadAvailableTimeSlots() {
+  loadAvailableNatacion() {
     if (this.selectedDate) {
-      console.log('Selected Date:', this.selectedDate);  // Verificar la fecha seleccionada
+      console.log('Selected Date:', this.selectedDate);  
 
       // Ajustar el formateo de la fecha para asegurarse de que sea correcta
       const formattedDate = this.selectedDate.toISOString().split('T')[0];
-      console.log('Formatted Date:', formattedDate);  // Verificar la fecha formateada
+      console.log('Formatted Date:', formattedDate);  
 
       this.reservationService.getAvailableNatacion(formattedDate).subscribe(
         (data: any) => {
-          console.log('Data received from backend:', data);  // Verificar los datos recibidos
-          this.availableTimeSlots = data;
-          console.log('Filtered Time Slots:', this.availableTimeSlots);  // Verificar los datos filtrados
+          console.log('Data received from backend:', data);  
+          this.availableTimeNatacion = data;
+          console.log('Filtered Time Slots:', this.availableTimeNatacion);  
         },
         (error: any) => {
           console.error('Error loading time slots:', error);
@@ -56,22 +56,22 @@ export class NatacionComponent implements OnInit {
 
   confirmReservation() {
     if (this.selectedDate && this.selectedHour) {
-      // Encontrar el timeSlotId correspondiente a la hora seleccionada
-      const selectedTimeSlot = this.availableTimeSlots.find(slot => slot.hour === this.selectedHour);
+      // Encontrar el NatacionId correspondiente a la hora seleccionada
+      const selectedTimeNatacion = this.availableTimeNatacion.find(slot => slot.hour === this.selectedHour);
 
-      if (selectedTimeSlot) {
-        const timeSlotId = selectedTimeSlot.id;
+      if (selectedTimeNatacion) {
+        const timeNatacionId = selectedTimeNatacion.id;
         const reservation = {
           date: this.selectedDate.toISOString().split('T')[0],  // Asegúrate de enviar la fecha en el formato correcto
           hour: this.selectedHour
         };
 
-        this.reservationService.createReservation(timeSlotId, reservation).subscribe(
+        this.reservationService.createReservation(timeNatacionId, reservation).subscribe(
           response => {
             const formattedDate = this.selectedDate!.toLocaleDateString();
             this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
             this.reservationConfirmed = true;
-            this.loadAvailableTimeSlots(); // Recarga las horas disponibles después de confirmar la reserva
+            this.loadAvailableNatacion(); // Recarga las horas disponibles después de confirmar la reserva
           },
           error => {
             console.error('Error creating reservation:', error);

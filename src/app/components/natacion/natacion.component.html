@@ -12,7 +12,7 @@
   <div *ngIf="selectedDate">
     <h2>Horas disponibles</h2>
     <mat-radio-group [(ngModel)]="selectedHour">
-      <div *ngFor="let slot of availableTimeSlots">
+      <div *ngFor="let slot of availableTimeNatacion">
         <mat-radio-button [value]="slot.hour" [disabled]="slot.availableSeats <= 0">
           {{ slot.hour }} ({{ slot.availableSeats }} plazas disponibles)
         </mat-radio-button>
