@@ -10,8 +10,8 @@ export class ReservationService {
 
   constructor(private http: HttpClient) {}
 
-  getAvailableTimeSlots(date: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/timeslots/${date}`);
+  getAvailableNatacion(date: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/natacion/${date}`);
   }
 
   createReservation(timeSlotId: number, reservation: any): Observable<any> {

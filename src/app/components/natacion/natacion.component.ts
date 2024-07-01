@@ -41,7 +41,7 @@ export class NatacionComponent implements OnInit {
       const formattedDate = this.selectedDate.toISOString().split('T')[0];
       console.log('Formatted Date:', formattedDate);  // Verificar la fecha formateada
 
-      this.reservationService.getAvailableTimeSlots(formattedDate).subscribe(
+      this.reservationService.getAvailableNatacion(formattedDate).subscribe(
         (data: any) => {
           console.log('Data received from backend:', data);  // Verificar los datos recibidos
           this.availableTimeSlots = data;
