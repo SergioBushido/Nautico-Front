@@ -25,6 +25,15 @@ export class ReservationService {
   createReservationGym(timeSlotId: number, reservation: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/gimnasio/${timeSlotId}`, reservation);
   }
+
+
+  getAvailableTenis(date: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/tenis/${date}`);
+}
+
+createReservationTenis(timeTenisnId: number, reservation: any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}/tenis/${timeTenisnId}`, reservation);
+}
 }
 
 /*

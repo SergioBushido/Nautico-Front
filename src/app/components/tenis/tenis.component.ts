@@ -1,50 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ReservationService } from '../../services/reservation/Reservation.Service';
 
 @Component({
   selector: 'app-tenis',
   templateUrl: './tenis.component.html',
   styleUrl: './tenis.component.css'
 })
-export class TenisComponent {
+export class TenisComponent implements OnInit {
 
 
   selectedDate: Date | null = null;
-  availableHours: string[] = [];
+  availableTenis: any[] = [];
   selectedHour: string | null = null;
   reservationConfirmed: boolean = false;
   reservationMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private reservationService: ReservationService) {}
+  ngOnInit(): void {
+  }
 
 
   onDateChange(event: any) {
     this.selectedDate = event.value;
-    this.loadAvailableHours();
+    this.adjustDateToCorrectTimezone();
+    this.loadAvailableTenis();
   }
 
-  loadAvailableHours() {
-    const morningHours = this.generateHours('08:00', 8);  // Genera 8 horas desde las 08:00
-    const afternoonHours = this.generateHours('14:00', 8);  // Genera 8 horas desde las 14:00
-    this.availableHours = [...morningHours, ...afternoonHours];
-  }
-
-  generateHours(start: string, count: number): string[] {
-    const [startHour, startMinute] = start.split(':').map(Number);
-    let hours: string[] = [];
-    for (let i = 0; i < count; i++) {
-      const hour = startHour + i;
-      const formattedHour = hour < 10 ? `0${hour}` : hour;
-      hours.push(`${formattedHour}:${startMinute < 10 ? '0' + startMinute : startMinute}`);
+  adjustDateToCorrectTimezone() {
+    if (this.selectedDate) {
+      const userTimezoneOffset = this.selectedDate.getTimezoneOffset() * 60000;
+      this.selectedDate = new Date(this.selectedDate.getTime() - userTimezoneOffset);
     }
-    return hours;
   }
 
-  confirmReservation() {
+
+   loadAvailableTenis() {
+    if (this.selectedDate) {
+      console.log('Selected Date:', this.selectedDate);  
+
+      // Ajustar el formateo de la fecha para asegurarse de que sea correcta
+      const formattedDate = this.selectedDate.toISOString().split('T')[0];
+      console.log('Formatted Date:', formattedDate);  
+
+      this.reservationService.getAvailableTenis(formattedDate).subscribe(
+        (data: any) => {
+          console.log('Data received from backend:', data);  
+          this.availableTenis = data;
+          console.log('Filtered Time Slots:', this.availableTenis);  
+        },
+        (error: any) => {
+          console.error('Error loading time slots:', error);
+        }
+      );
+    }
+  }
+  confirmReservationTenis() {
     if (this.selectedDate && this.selectedHour) {
-      const formattedDate = this.selectedDate.toLocaleDateString();
-      this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
-      this.reservationConfirmed = true;
+      // Encontrar el NatacionId correspondiente a la hora seleccionada
+      const selectedTimeTenis = this.availableTenis.find(slot => slot.hour === this.selectedHour);
+
+      if (selectedTimeTenis) {
+        const timeTenisnId = selectedTimeTenis.id;
+        const reservation = {
+          date: this.selectedDate.toISOString().split('T')[0],  // Asegúrate de enviar la fecha en el formato correcto
+          hour: this.selectedHour
+        };
+
+        this.reservationService.createReservationTenis(timeTenisnId, reservation).subscribe(
+          response => {
+            const formattedDate = this.selectedDate!.toLocaleDateString();
+            this.reservationMessage = `Ha reservado correctamente su cita para el día ${formattedDate} a la(s) ${this.selectedHour}`;
+            this.reservationConfirmed = true;
+            this.loadAvailableTenis(); // Recarga las horas disponibles después de confirmar la reserva
+          },
+          error => {
+            console.error('Error creating reservation:', error);
+          }
+        );
+      }
     }
   }
 
